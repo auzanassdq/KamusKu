@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".SplashActivity">
+
+    <ImageView
+        android:id="@+id/img_dicoding"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/dicoding"
+        android:layout_centerInParent="true"
+        android:gravity="center"/>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_dicoding"
+        android:layout_marginLeft="@dimen/vertical_margin"
+        android:layout_marginRight="@dimen/horizontal_margin"
+        android:layout_centerVertical="true" />
+
+    <!--<com.rey.material.widget.ProgressView-->
+        <!--android:id="@+id/progress_circular"-->
+        <!--android:layout_width="48dp"-->
+        <!--android:layout_height="48dp"-->
+        <!--app:pv_autostart="true"-->
+        <!--app:pv_circular="true"-->
+        <!--app:pv_progressStyle="@style/Material.Drawable.CircularProgress"-->
+        <!--app:pv_progressMode="indeterminate"/>-->
+
+</RelativeLayout>
