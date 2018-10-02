@@ -8,8 +8,8 @@ import android.provider.BaseColumns;
  */
 public class DatabaseContract {
 
-    public static String TABLE_KAMUS = "table_kamus";
-//    public static String TABLE_KAMUS_EN = "table_english";
+    public static String TABLE_KAMUS_IN = "table_indonesia";
+    public static String TABLE_KAMUS_EN = "table_english";
 
 
     public static final class WordColumns implements BaseColumns {

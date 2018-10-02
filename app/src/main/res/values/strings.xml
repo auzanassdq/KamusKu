@@ -5,4 +5,6 @@
     <string name="search">Search</string>
     <string name="search_hint">cari kata</string>
     <string name="app_first_run">first run</string>
+    <string name="eng_to_ind">english</string>
+    <string name="ind_to_eng">indonesia</string>
 </resources>

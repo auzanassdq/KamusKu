@@ -12,7 +12,8 @@ import com.example.auzan.kamusku.Kamus;
 import java.util.ArrayList;
 
 import static android.provider.BaseColumns._ID;
-import static com.example.auzan.kamusku.Database.DatabaseContract.TABLE_KAMUS;
+import static com.example.auzan.kamusku.Database.DatabaseContract.TABLE_KAMUS_EN;
+import static com.example.auzan.kamusku.Database.DatabaseContract.TABLE_KAMUS_IN;
 import static com.example.auzan.kamusku.Database.DatabaseContract.WordColumns.MEAN;
 import static com.example.auzan.kamusku.Database.DatabaseContract.WordColumns.WORD;
 
@@ -40,10 +41,12 @@ public class KamusHelper {
         databaseHelper.close();
     }
 
-    public ArrayList<Kamus> getDataByWord (String word) {
-        Cursor cursor = database.query(TABLE_KAMUS, null, WORD +
-                " LIKE ?", new String[]{word}, null, null, _ID +
+    public ArrayList<Kamus> getDataByWord (String query, boolean lang) {
+
+        Cursor cursor = database.query(langCheck(lang), null, WORD +
+                " LIKE?", new String[]{query.trim()+"%"}, null, null, _ID +
                 " ASC", null);
+
         cursor.moveToFirst();
         ArrayList<Kamus> arrayList = new ArrayList<>();
         Kamus kamus;
@@ -63,8 +66,11 @@ public class KamusHelper {
         return arrayList;
     }
 
-    public ArrayList<Kamus> getAllData(){
-        Cursor cursor = database.query(TABLE_KAMUS, null, null, null, null, null, _ID + " ASC", null);
+    public ArrayList<Kamus> getAllData(boolean lang){
+
+        Cursor cursor = database.query(langCheck(lang), null, null, null,
+                null, null, _ID + " ASC", null);
+
         cursor.moveToFirst();
         ArrayList<Kamus> arrayList = new ArrayList<>();
         Kamus kamus;
@@ -84,11 +90,11 @@ public class KamusHelper {
         return arrayList;
     }
 
-    public long insert(Kamus kamus){
+    public long insert(Kamus kamus, boolean lang){
         ContentValues initialValues = new ContentValues();
         initialValues.put(WORD, kamus.getWords());
         initialValues.put(MEAN, kamus.getMeans());
-        return database.insert(TABLE_KAMUS, null, initialValues);
+        return database.insert(langCheck(lang), null, initialValues);
     }
 
     public void beginTransaction(){
@@ -103,26 +109,30 @@ public class KamusHelper {
         database.endTransaction();
     }
 
-    public void insertTransaction(Kamus kamus){
-        String sql = "INSERT INTO " + TABLE_KAMUS + " (" + WORD + ", " + MEAN + ") VALUES (?, ?)";
+    public void insertTransaction(Kamus kamus, boolean lang){
+        String sql = "INSERT INTO " + langCheck(lang) + " (" + WORD + ", " + MEAN + ") VALUES (?, ?)";
         SQLiteStatement stmt = database.compileStatement(sql);
         stmt.bindString(1, kamus.getWords());
         stmt.bindString(2, kamus.getMeans());
         stmt.execute();
         stmt.clearBindings();
-
     }
 
-    public int update(Kamus kamus){
+    public int update(Kamus kamus, boolean lang){
+
         ContentValues args = new ContentValues();
         args.put(WORD, kamus.getWords());
         args.put(MEAN, kamus.getMeans());
-        return database.update(TABLE_KAMUS, args, _ID + "= '" + kamus.getId() + "'", null);
+        return database.update(langCheck(lang), args, _ID + "= '" + kamus.getId() + "'", null);
     }
 
-    public int delete(int id) {
-        return database.delete(TABLE_KAMUS, _ID + " = '" + id + "'", null);
+    public int delete(int id, boolean lang) {
+        return database.delete(langCheck(lang), _ID + " = '" + id + "'", null);
     }
 
+    private String langCheck (boolean lang){
+        String table = lang ? TABLE_KAMUS_IN : TABLE_KAMUS_EN;
+        return table;
+    }
 
 }

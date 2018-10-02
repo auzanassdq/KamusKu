@@ -1,6 +1,6 @@
 package com.example.auzan.kamusku.Adapter;
 
-import android.support.annotation.NonNull;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +19,12 @@ import java.util.ArrayList;
 public class ListKamusAdapter extends RecyclerView.Adapter<ListKamusAdapter.KamusHolder> {
 
     private ArrayList<Kamus> mData = new ArrayList<>();
+    private Context context;
+    private LayoutInflater mInflater;
 
-    public ListKamusAdapter(){
+    public ListKamusAdapter(Context context){
+        this.context = context;
+        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -31,6 +35,11 @@ public class ListKamusAdapter extends RecyclerView.Adapter<ListKamusAdapter.Kamu
 
     public void addItem(ArrayList<Kamus> mData){
         this.mData = mData;
+        notifyDataSetChanged();
+    }
+
+    public void replaceAll(ArrayList<Kamus> items) {
+        mData = items;
         notifyDataSetChanged();
     }
 
@@ -50,15 +59,9 @@ public class ListKamusAdapter extends RecyclerView.Adapter<ListKamusAdapter.Kamu
         return position;
     }
 
-
     @Override
     public int getItemCount() {
         return mData.size();
-    }
-
-    public void replaceAll(ArrayList<Kamus> items) {
-        mData = items;
-        notifyDataSetChanged();
     }
 
     public class KamusHolder extends RecyclerView.ViewHolder {
@@ -67,7 +70,6 @@ public class ListKamusAdapter extends RecyclerView.Adapter<ListKamusAdapter.Kamu
 
         public KamusHolder(View itemView) {
             super(itemView);
-
             tvWord = (TextView)itemView.findViewById(R.id.tv_word);
             tvMean = (TextView)itemView.findViewById(R.id.tv_mean);
         }
