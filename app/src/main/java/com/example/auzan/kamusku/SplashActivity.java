@@ -65,14 +65,6 @@ public class SplashActivity extends Activity {
                 kamusHelper.close();
                 appPreference.setFirstRun(false);
 
-            } else {
-                try {
-                    synchronized (this) {
-                        this.wait(2000);
-                        this.wait(2000);
-                    }
-                } catch (Exception e) {
-                }
             }
             return null;
         }

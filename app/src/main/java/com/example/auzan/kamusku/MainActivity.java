@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
     private void getData(boolean lang, String query){
         try {
             kamusHelper.open();
-
             kamus = query.isEmpty() ?
                     kamusHelper.getAllData(lang) :
                     kamusHelper.getDataByWord(query, lang);
@@ -55,6 +54,13 @@ public class MainActivity extends AppCompatActivity {
             kamusHelper.close();
         }
         listKamusAdapter.replaceAll(kamus);
+
+        if (isIndonesia) {
+            setTitle("Kamus Indonesia");
+        } else {
+            setTitle("Kamus English");
+        }
+
     }
 
     @Override
